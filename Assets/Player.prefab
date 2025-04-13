@@ -206,9 +206,9 @@ Transform:
   m_LocalScale: {x: 8, y: 8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1957304918367961583}
   - {fileID: 7325539818258409862}
   - {fileID: 2726674839712337140}
-  - {fileID: 1957304918367961583}
   - {fileID: 2483368552643299351}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -307,6 +307,7 @@ MonoBehaviour:
   throwBobber: 0
   fishingPoint: {fileID: 2483368552643299351}
   bobber: {fileID: 9208963351770387599}
+  fish: {fileID: 0}
   fishGamePanel: {fileID: 0}
   barMinigame: {fileID: 0}
   inGame: 0

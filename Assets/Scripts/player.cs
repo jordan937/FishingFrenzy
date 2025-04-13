@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -9,9 +10,11 @@ public class Player : MonoBehaviour
     public bool throwBobber;
     public Transform fishingPoint;
     public GameObject bobber;
+    public GameObject fish; // Assign in inspector
     public GameObject fishGamePanel; // Assign in inspector
 
     public minigame barMinigame;
+    public TextMeshProUGUI winText;
 
     public bool inGame = false;
     public float moveSpeed = 5f; // Movement speed for 2D
@@ -141,10 +144,18 @@ public class Player : MonoBehaviour
 
 public void fishGameWon()
 {
-    Debug.Log("Fish game won!");
+      Debug.Log("Fish game won!");
     inGame = true;
-    playerAnim.Play("playerWonFish");
-    Invoke(nameof(ResetFishingState), 1.5f); // Delay reset to allow win animation
+    winnerAnim = true;
+    fish.gameObject.SetActive(true);
+
+    if (winText != null)
+    {
+        winText.gameObject.SetActive(true);
+        Invoke(nameof(HideWinText), 2f);
+    }
+
+    Invoke(nameof(ResetFishingState), 3f);
 }
 
 public void fishGameLossed()
@@ -157,6 +168,8 @@ public void fishGameLossed()
 
 private void ResetFishingState()
 {
+    Debug.Log("Resetting fishing state...");
+    fish.SetActive(false);
     poleBack = false;
     throwBobber = false;
     isFishing = false;
@@ -204,17 +217,12 @@ private void ResetFishingState()
     Debug.Log("Bar minigame started!");
 }
 
-    private void ResolveFishCatch()
+void HideWinText()
+{
+    if (winText != null)
     {
-        bool caughtFish = UnityEngine.Random.value > 0.5f;
-
-        if (caughtFish)
-        {
-            fishGameWon();
-        }
-        else
-        {
-            fishGameLossed();
-        }
+        winText.gameObject.SetActive(false);
     }
+}
+
 }
