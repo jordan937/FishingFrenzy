@@ -41,32 +41,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // --------------------------
-        // Optional 2D WASD Movement
-        // --------------------------
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-        Vector3 move = new Vector3(moveX, moveY, 0) * moveSpeed * Time.deltaTime;
-
-        if (!isFishing)
-        {
-            transform.Translate(move);
-
-            if (move != Vector3.zero)
-            {
-                playerAnim.Play("playerWalk");
-
-                // Flip sprite
-                if (move.x > 0)
-                    transform.localScale = new Vector3(8, 8, 8);
-                else if (move.x < 0)
-                    transform.localScale = new Vector3(-8, 8, 8);
-            }
-            else
-            {
-                playerAnim.Play("playerStill");
-            }
-        }
 
         // --------------------------
         // Start casting fishing pole
