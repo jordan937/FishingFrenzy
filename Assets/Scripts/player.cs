@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class Player : MonoBehaviour
@@ -13,11 +14,12 @@ public class Player : MonoBehaviour
     public GameObject fish; // Assign in inspector
     public GameObject fishGamePanel; // Assign in inspector
 
+    public TextMeshProUGUI scoreText; // Assign this in the inspector
+    private int Score = 0;
     public minigame barMinigame;
     public TextMeshProUGUI winText;
 
     public bool inGame = false;
-    public float moveSpeed = 5f; // Movement speed for 2D
 
     private bool minigameStarted = false;
     private bool bobberInWater = false;
@@ -118,7 +120,26 @@ public class Player : MonoBehaviour
 
 public void fishGameWon()
 {
-      Debug.Log("Fish game won!");
+    // Pick a random score bonus from the set {10, 30, 50}
+    int[] scoreOptions = { 10, 30, 50 };
+    int randomIndex = UnityEngine.Random.Range(0, scoreOptions.Length); // Random index from 0 to 2
+    int scoreToAdd = scoreOptions[randomIndex];
+    Debug.Log("Fish game won! Score: " + scoreToAdd);
+    // Add the score to the player's score
+
+    Score += scoreToAdd;
+
+    if (scoreText != null)
+    {
+        scoreText.text = "Score: " + Score.ToString();
+    }
+
+    if(Score >= 300)
+    {
+        Debug.Log("You won the game!");
+        SceneManager.LoadScene(0); // Load the main menu scene;
+    }
+
     inGame = true;
     winnerAnim = true;
     fish.gameObject.SetActive(true);
@@ -137,7 +158,7 @@ public void fishGameLossed()
     Debug.Log("Fish game lost!");
     inGame = true;
     playerAnim.Play("playerStill");
-    Invoke(nameof(ResetFishingState), 1.0f); // Optional: delay for loss reaction
+    Invoke(nameof(ResetFishingState), 1f); // Optional: delay for loss reaction
 }
 
 private void ResetFishingState()
